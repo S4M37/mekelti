@@ -1,0 +1,89 @@
+i.small {
+    line-height: 50px;
+    font-size: 1.3rem !important;
+}
+
+.stop-scrolling {
+  height: 100%;
+  overflow: hidden;
+}
+
+.card-content {
+    min-height: 78% !important ;
+}
+
+.card.large {
+    height: 85% !important;
+}
+
+.nano-content {
+    padding: 30px;
+}
+
+.hide {
+    opacity: 0;
+}
+
+.show {
+    opacity: 1;
+}
+
+.right {
+    border-color: green !important;
+}
+
+.wrong {
+    border-color: red !important;
+}
+
+.progress {
+    margin: 0;
+}
+
+.filter-ghost {
+    position: absolute;
+    left: 0;
+    top: 64px;
+    min-width: 100%;
+    min-height: 100%;
+    opacity: 0;
+    background: rgba(0, 0, 0, 0.5);
+    transition: opacity .5s, width .1s .5s, height .1s .5s;
+}
+
+.card {
+    z-index: 100 !important;
+    top: 70px;
+    position: absolute !important;
+    width: inherit !important;
+    transition: opacity .5s, width .1s .5s, height .1s .5s;
+}
+
+.filter-ghost.open {
+    opacity: 1;
+    display: block;
+    z-index: 99 !important;
+}
+
+.filter-ghost.close {
+    opacity: 0;
+    z-index: 0 !important;
+}
+
+.btn-floating {
+    position: fixed;
+    right: 23px;
+    bottom: 23px;
+    z-index: 98;
+}
+
+.card-panel {
+    margin: 0 !important;
+    -webkit-border-radius: 0 !important;
+    -moz-border-radius: 0 !important;
+    border-radius: 0 !important;
+}
+
+.titre-item {
+    margin-left: 15px;
+}
