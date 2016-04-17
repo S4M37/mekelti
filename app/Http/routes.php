@@ -11,11 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/feed','FeedController@index');
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -27,18 +22,26 @@ Route::get('/feed','FeedController@index');
 |
 */
 
-Route::group(['middleware' => ['web']], function () {
-    //
+
+Route::get('/feed', 'FeedController@index');
+Route::get('/feed/{link}', 'FeedController@index')->where('link', '[0-9]+');
+Route::get('/link', 'FeedController@links');
+Route::post('/link', 'FeedController@links');
+Route::group(['prefix' => 'recette'], function () {
+    route::match(['get', 'post'], '/', 'RecetteController@getRecette');
+    route::match(['get', 'post'], '/form', 'RecetteController@index');
+    route::post('/add', 'RecetteController@store');
+    route::get('/addparsedrecipe', 'RecetteController@storeParserRecipe');
+    Route::group(['prefix' => '/{id_Recette}'], function () {
+        route::get('/', 'RecetteController@getRecette');
+        route::get('/update', 'RecetteController@getUpdate');
+        route::get('/delete', 'RecetteController@delete');
+    });
 });
 
-Route::get('/feed/{link}','FeedController@index')->where('link', '[0-9]+');
-Route::get('/link','FeedController@links');
-Route::post('/link','FeedController@links');
-Route::group(['prefixe'=>'/recette'],function(){
-	route::match(['get','post'],'/','RecetteController@getRecette');
-	route::match(['get','post'],'/form','RecetteController@index');
-	route::post('/add','RecetteController@store');
-	route::get('/update/{id}','RecetteController@getUpdate')->where('id', '[0-9]+');
-	route::get('/delete/{id}','RecetteController@delete')->where('id', '[0-9]+');
-	route::get('/addparsedrecipe','RecetteController@storeParserRecipe');
+//mobile
+Route::group(['prefix' => 'mobile'], function () {
+    route::post('/signin', 'MobileController@signin');
+    route::post('/logout', 'MobileController@logout');
+    route::post('/signup', 'MobileController@signup');
 });
