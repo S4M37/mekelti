@@ -65,8 +65,18 @@ class RecetteController extends Controller
 
     public function getUpdate($id_Recette = null)
     {
-        $recette = $this->recetteService->getRecette($id_Recette);
-        return view('recetteUpdate')->with('recette', $recette);
+        if ($id_Recette != null) {
+            $recette = $this->recetteService->getRecette($id_Recette);
+            return view('recetteUpdate')->with('recette', $recette);
+        }
+    }
+
+    public function Update($id_Recette = null, Request $request)
+    {
+        if ($id_Recette != null) {
+            $this->recetteService->updateRecette($id_Recette, $request);
+        }
+        return redirect('/recette');
     }
 
     public function delete($id_Recette = null)

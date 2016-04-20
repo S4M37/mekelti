@@ -14,7 +14,7 @@
       <h4><a href="{{ $item->get_permalink() }}">{{ $item->get_title() }}</a></h4>
       {{ $item->get_description() }}
       <p><small>Posted on {{ $item->get_date('j F Y | g:i a') }}</small></p>
-      <a href="/addparsedrecipe?label={{$item->get_title()}}&amp;description={{$item->get_description()}}">ajouter cette recette</a>
+      <a href="addparsedrecipe?label={{$item->get_title()}}&amp;description={{$item->get_description()}}">ajouter cette recette</a>
     </div>
   @endforeach
 @endsection

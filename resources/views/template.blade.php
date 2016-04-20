@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>RECETTE</title>
 
- {!! Html::style('https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css') !!}
+    {!! Html::style('https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css') !!}
     {!! Html::style('https://fonts.googleapis.com/icon?family=Material+Icons') !!}
     {!! Html::style('css/style.css') !!}
     {!! Html::style('css/nanoscroller.css') !!}
@@ -17,12 +17,16 @@
     {!! Html::script('http://malsup.github.com/min/jquery.form.min.js') !!}
     {!! Html::script('js/materialize.js') !!}
     {!! Html::script('js/jquery.nanoscroller.min.js') !!}<!---->
-    
+
 </head>
 <body>
 
 @yield('contenu')
 
-
+<script>
+    $(document).ready(function () {
+        $('select').material_select();
+    });
+</script>
 </body>
 </html>

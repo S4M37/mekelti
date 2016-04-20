@@ -23,18 +23,18 @@
 */
 
 
-Route::get('/feed', 'FeedController@index');
-Route::get('/feed/{link}', 'FeedController@index')->where('link', '[0-9]+');
-Route::get('/link', 'FeedController@links');
-Route::post('/link', 'FeedController@links');
 Route::group(['prefix' => 'recette'], function () {
+    Route::get('/feed', 'FeedController@index');
+    Route::get('/feed/{link}', 'FeedController@index')->where('link', '[0-9]+');
+    Route::get('/link', 'FeedController@links');
     route::match(['get', 'post'], '/', 'RecetteController@getRecette');
     route::match(['get', 'post'], '/form', 'RecetteController@index');
     route::post('/add', 'RecetteController@store');
-    route::get('/addparsedrecipe', 'RecetteController@storeParserRecipe');
+    route::get('feed/addparsedrecipe', 'RecetteController@storeParserRecipe');
     Route::group(['prefix' => '/{id_Recette}'], function () {
         route::get('/', 'RecetteController@getRecette');
-        route::get('/update', 'RecetteController@getUpdate');
+        route::get('/form', 'RecetteController@getUpdate');
+        route::post('/update', 'RecetteController@Update');
         route::get('/delete', 'RecetteController@delete');
     });
 });
@@ -44,4 +44,5 @@ Route::group(['prefix' => 'mobile'], function () {
     route::post('/signin', 'MobileController@signin');
     route::post('/logout', 'MobileController@logout');
     route::post('/signup', 'MobileController@signup');
+    route::get('/validate/{id_user}/{validation_code}', 'MobileController@validateEmail');
 });

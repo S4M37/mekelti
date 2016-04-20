@@ -15,4 +15,14 @@ class RecetteService
     {
         Recette::find($id_Recette)->delete();
     }
+
+    function updateRecette($id_Recette, $request)
+    {
+        $updatedRecette = Recette::find($id_Recette);
+        $updatedRecette->label = $request->input('label');
+        $updatedRecette->description = $request->input('description');
+        $updatedRecette->type = $request->input("type");
+        $updatedRecette->save();
+
+    }
 }
