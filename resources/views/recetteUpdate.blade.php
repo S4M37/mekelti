@@ -3,7 +3,7 @@
 @section('contenu')
     <nav>
         <div class="nav-wrapper">
-            <a href="/recette" class="brand-logo">recettes</a>
+            <a href="/mekelti/public/recette" class="brand-logo">recettes</a>
         </div>
     </nav>
     <div class="container">
@@ -21,8 +21,9 @@
                 <tr>
                     <td>
                         <div class="input-field col s12">
-                            <input id="description" type="text" name="description" value="{{$recette->description}}">
-                            <label for=" description">description</label></input>
+                            <textarea id="description" type="text" name="description"
+                                      class="materialize-textarea"></textarea>
+                            <label for=" description">description</label>
                         </div>
                     </td>
                 </tr>
@@ -69,6 +70,9 @@
             du jour</a>
     </div>
     </div>
+    <script>
+        $('#description').val('{{$recette->description}}');
+    </script>
 @endsection  
 
 

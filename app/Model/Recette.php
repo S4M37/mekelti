@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Recette extends Model
 {
-     protected $table = 'recette';
+    protected $table = 'recette';
 
     protected $primaryKey = 'id_Recette';
-	protected $fillable = [
-        'label', 'description', 'type',
+    protected $fillable = [
+        'label', 'description', 'type', 'img'
     ];
-    public $timestamps=false;
+    public $timestamps = false;
 
 }

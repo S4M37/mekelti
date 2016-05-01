@@ -11,7 +11,7 @@
     </nav>
     </div>
     <div class="container">
-        <form method="POST" action="add">
+        <form method="POST" action="add" enctype="multipart/form-data">
             <h3></h3>
             <table>
                 <tr>
@@ -25,8 +25,9 @@
                 <tr>
                     <td>
                         <div class="input-field col s12">
-                            <input id="description" type="text" name="description">
-                            <label for="description">description</label></input>
+                            <textarea id="description" type="text" name="description"
+                                      class="materialize-textarea"></textarea>
+                            <label for="description">description</label>
                         </div>
                     </td>
                 </tr>
@@ -41,6 +42,19 @@
                                 <option value="vitamine">vitamines</option>
                             </select>
                             <label>Choose your option</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="file-field input-field">
+                            <div class="btn">
+                                <span>Image</span>
+                                {!! Form::file('image')!!}
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text">
+                            </div>
                         </div>
                     </td>
                 </tr>

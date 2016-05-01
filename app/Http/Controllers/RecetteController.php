@@ -33,6 +33,14 @@ class RecetteController extends Controller
             return view('recetteForm')->with('response', 'completez les champs');
         } else {
             $newRecette = new Recette();
+            $image = $request->file('image');
+            $chemin = config('images.path');
+            $extension = $image->getClientOriginalExtension();
+            do {
+                $nom = str_random(10) . '.' . $extension;
+            } while (file_exists($chemin . '/' . $nom));
+            $image->move($chemin, $nom);
+            $newRecette->img = 'http://192.168.1.4' . $request->getBaseUrl() . '/' . $chemin . '/' . $nom;
             $newRecette->label = $request->input('label');
             $newRecette->description = $request->input('description');
             $newRecette->type = $request->input('type');
@@ -47,7 +55,7 @@ class RecetteController extends Controller
             $recette = $this->recetteService->getRecette($id_Recette);
             return $recette;
         } else {
-            $recettes = Recette::all();
+            $recettes = Recette::orderBy('id_Recette', 'desc')->get();
             return view('recetteView')->with('recettes', $recettes);
         }
     }

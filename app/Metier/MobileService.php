@@ -22,12 +22,13 @@ class MobileService
         $user->email = $email;
         $user->password = bcrypt($request->input('password'));
         $user->validation_code = $confirmation_code;
+        $user->region = $request->input('region');
         $user->save();
         $link = "http://localhost/mekelti/public/mobile/validate/" . $user->id_user . "/" . $confirmation_code;
         Mail::send('validationEmail', ['name' => $name, 'link' => $link], function ($message) use ($email) {
             $message->to($email)->subject('Verification');
         });
-        return response()->json(["user" => $user]);
+        return response()->json(["user" => $user], 200);
     }
 
     function validate($id_user, $validation_code)

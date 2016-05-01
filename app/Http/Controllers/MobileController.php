@@ -25,23 +25,23 @@ class MobileController extends Controller
         //return $credentials;
         $user = User::whereEmail($request->input('email'))->get()->first();
         if ($user == null) {
-            return response()->json(['error' => 'invalid_user'], 500);
+            return response()->json(['response' => 'invalid_user'], 500);
         } else {
             if ($user->valide == 0) {
-                return response()->json(['error' => 'inactive_account'], 402);
+                return response()->json(['response' => 'inactive_account'], 402);
             } else {
                 try {
                     // verify the credentials and create a token for the user
                     if (!$token = JWTAuth::attempt($credentials)) {
-                        return response()->json(['error' => 'invalid_credentials'], 401);
+                        return response()->json(['response' => 'invalid_credentials'], 401);
                     }
                 } catch (JWTException $e) {
                     // something went wrong
-                    return response()->json(['error' => 'could_not_create_token'], 500);
+                    return response()->json(['response' => 'could_not_create_token'], 500);
                 }
 
                 // if no errors are encountered we can return a JWT
-                return response()->json(compact('token', 'user'));
+                return response()->json(compact('token', 'user'), 200);
             }
         }
     }

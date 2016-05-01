@@ -21,8 +21,13 @@ class RecetteService
         $updatedRecette = Recette::find($id_Recette);
         $updatedRecette->label = $request->input('label');
         $updatedRecette->description = $request->input('description');
+        // $updatedRecette->img = $request->input('description');
         $updatedRecette->type = $request->input("type");
         $updatedRecette->save();
+    }
 
+    function getDescription($desc)
+    {
+        return substr($desc, strpos('>', $desc));
     }
 }

@@ -46,3 +46,20 @@ Route::group(['prefix' => 'mobile'], function () {
     route::post('/signup', 'MobileController@signup');
     route::get('/validate/{id_user}/{validation_code}', 'MobileController@validateEmail');
 });
+
+//user
+Route::group(['prefix' => 'user'], function () {
+    Route::group(['prefix' => '/{id_User}'], function () {
+        route::get('/', 'UserController@getUser');
+        route::get('/newsfeed', 'UserController@getNewsFeed');
+        route::post('/update', 'UserController@updateUser');
+        route::get('/delete', 'UserController@deleteUser');
+        Route::group(['prefix' => '/favoris'], function () {
+            route::get('/', 'UserController@getFavoris');
+            route::post('/add', 'UserController@storeFavoris');
+            Route::group(['prefix' => '/{id_Favoris}', 'before' => 'id_User'], function () {
+                route::get('/delete', 'UserController@deleteFavoris');
+            });
+        });
+    });
+});
