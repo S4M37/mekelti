@@ -2,6 +2,7 @@
 
 namespace App\Metier;
 
+use App\Model\ProposedRecette;
 use App\Model\Recette;
 use App\Model\User;
 use App\Model\UserFavoris;
@@ -83,7 +84,7 @@ class UserServices
 
     public function getNewsFeed($id_User)
     {
-        $recettes = Recette::orderBy('id_Recette', 'desc')->get();
+        $recettes = Recette::orderBy('id_Recette', 'desc')->whereIdProposed(0)->get();
         $userFavoris = UserFavoris::whereIdUser($id_User)->get();
         $response = array();
         foreach ($recettes as $recette) {
@@ -96,6 +97,12 @@ class UserServices
             } else {
                 array_push($response, (object)array('recette' => $recette, 'favoris' => 0, 'favorisId' => 0));
             }
+        }
+        $proposedRecettes = ProposedRecette::where('id_User', '!=', $id_User)
+            ->join('recette', 'recette.id_Proposed', '=', 'proposed_recette.id_Proposed')
+            ->select('recette.*')->get();
+        foreach ($proposedRecettes as $proposedRecette) {
+            array_push($response, (object)array('recette' => $proposedRecette, 'favoris' => 2, 'favorisId' => 0));
         }
         return response()->json(['response' => $response], 200);
     }

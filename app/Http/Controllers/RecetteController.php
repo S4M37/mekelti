@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use App\Metier\RecetteService;
+use App\Model\ProposedRecette;
 use App\Model\Recette;
 use Illuminate\Http\Request;
 use Input;
@@ -55,8 +56,11 @@ class RecetteController extends Controller
             $recette = $this->recetteService->getRecette($id_Recette);
             return $recette;
         } else {
-            $recettes = Recette::orderBy('id_Recette', 'desc')->get();
-            return view('recetteView')->with('recettes', $recettes);
+            $recettes = Recette::orderBy('id_Recette', 'desc')->whereIdProposed(0)->get();
+            $propsedRecettes = ProposedRecette::whereValid(1)
+                ->join('recette', 'recette.id_Proposed', '=', 'proposed_recette.id_Proposed')
+                ->select('recette.*')->get();
+            return view('recetteView')->with('recettes', $recettes)->with('proposedRecettes', $propsedRecettes);
         }
     }
 

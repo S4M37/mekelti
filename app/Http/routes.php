@@ -23,6 +23,7 @@
 */
 
 
+//recette Admin
 Route::group(['prefix' => 'recette'], function () {
     Route::get('/feed', 'FeedController@index');
     Route::get('/feed/{link}', 'FeedController@index')->where('link', '[0-9]+');
@@ -39,12 +40,26 @@ Route::group(['prefix' => 'recette'], function () {
     });
 });
 
+//proposition
+Route::group(['prefix' => 'proposition'], function () {
+    route::get('/', 'ProposedRecetteAdminController@getAllProposed');
+    Route::group(['prefix' => '/{id_Proposed}'], function () {
+        route::get('/validate', 'ProposedRecetteAdminController@validateProposition');
+        route::get('/refuser', 'ProposedRecetteAdminController@refuser');
+    });
+});
+
 //mobile
 Route::group(['prefix' => 'mobile'], function () {
     route::post('/signin', 'MobileController@signin');
     route::post('/logout', 'MobileController@logout');
     route::post('/signup', 'MobileController@signup');
     route::get('/validate/{id_user}/{validation_code}', 'MobileController@validateEmail');
+});
+
+//search
+Route::group(['prefix' => 'search'], function () {
+    route::get('/', 'searchController@searchAutoCompelte');
 });
 
 //user
@@ -61,5 +76,17 @@ Route::group(['prefix' => 'user'], function () {
                 route::get('/delete', 'UserController@deleteFavoris');
             });
         });
+        Route::group(['prefix' => '/proposed'], function () {
+            route::get('/', 'ProposedRecetteController@getProposed');
+            route::post('/store', 'ProposedRecetteController@proposeRecette');
+            Route::group(['prefix' => '/{id_Propose}'], function () {
+                route::get('/', 'ProposedRecetteController@getProposed');
+                route::post('/update', 'ProposedRecetteController@proposeRecette');
+                route::get('/delete', 'ProposedRecetteController@delete');
+            });
+        });
     });
 });
+
+
+

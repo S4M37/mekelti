@@ -49,4 +49,6 @@ class UserController extends Controller
     {
         return $this->userServices->getNewsFeed($id_User);
     }
+
+    
 }
