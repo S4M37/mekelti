@@ -10,7 +10,7 @@ class Recette extends Model
 
     protected $primaryKey = 'id_Recette';
     protected $fillable = [
-        'label', 'description', 'type', 'img'
+        'label', 'description', 'type', 'img', 'link'
     ];
     public $timestamps = false;
 

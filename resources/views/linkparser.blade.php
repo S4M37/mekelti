@@ -6,7 +6,7 @@
         <div class="nav-wrapper">
             <a href="/" class="brand-logo">choisir le lien de recette</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a href="/">recettes</a></li>
+                <li><a href="/mekelti/public/recette">recettes</a></li>
             </ul>
         </div>
     </nav>

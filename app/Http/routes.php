@@ -59,7 +59,7 @@ Route::group(['prefix' => 'mobile'], function () {
 
 //search
 Route::group(['prefix' => 'search'], function () {
-    route::get('/', 'searchController@searchAutoCompelte');
+    route::post('/', 'searchController@searchAutoCompelte');
 });
 
 //user

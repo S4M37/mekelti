@@ -51,8 +51,13 @@ class UserServices
 
     public function getFavoris($id_user)
     {
-        return response()->json(['response' => UserFavoris::whereIdUser($id_user)->join('recette', 'user_favoris.id_Recette', '=', 'recette.id_Recette')
-            ->select('recette.*', 'user_favoris.id_Favoris')->get()], 200);
+        $favoris = UserFavoris::whereIdUser($id_user)->join('recette', 'user_favoris.id_Recette', '=', 'recette.id_Recette')
+            ->select('recette.*', 'user_favoris.id_Favoris')->get();
+        $response = array();
+        foreach ($favoris as $favori) {
+            array_push($response, (object)array('recette' => $favori, 'id_Favoris' => $favori->id_Favoris));
+        }
+        return response()->json(['response' => $response], 200);
     }
 
     public function storeFavoris($request, $id_user)
@@ -98,11 +103,19 @@ class UserServices
                 array_push($response, (object)array('recette' => $recette, 'favoris' => 0, 'favorisId' => 0));
             }
         }
-        $proposedRecettes = ProposedRecette::where('id_User', '!=', $id_User)
+        $proposedRecettes = ProposedRecette::where('id_User', '!=', $id_User)->whereValid(1)
             ->join('recette', 'recette.id_Proposed', '=', 'proposed_recette.id_Proposed')
             ->select('recette.*')->get();
-        foreach ($proposedRecettes as $proposedRecette) {
-            array_push($response, (object)array('recette' => $proposedRecette, 'favoris' => 2, 'favorisId' => 0));
+        foreach ($proposedRecettes as $recette) {
+            if (count($userFavoris) > 0) {
+                if (($id_Favoris = $this->exist_favoris($userFavoris, $recette->id_Recette)) > 0) {
+                    array_push($response, (object)array('recette' => $recette, 'favoris' => 1, 'favorisId' => $id_Favoris));
+                } else if (!$this->exist($response, $recette)) {
+                    array_push($response, (object)array('recette' => $recette, 'favoris' => 0, 'favorisId' => 0));
+                }
+            } else {
+                array_push($response, (object)array('recette' => $recette, 'favoris' => 0, 'favorisId' => 0));
+            }
         }
         return response()->json(['response' => $response], 200);
     }

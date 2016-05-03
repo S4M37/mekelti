@@ -6,7 +6,7 @@
     <div class="nav-wrapper">
       <a href="{{ $permalink }}" class="brand-logo">{{ $title }}</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a href="/ ">recettes</a></li>
+        <li><a href="/mekelti/public/recette">recettes</a></li>
     </ul>
   </nav>
   @foreach ($items as $item)

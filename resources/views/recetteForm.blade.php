@@ -36,7 +36,7 @@
                     <td>
                         <div class="input-field col s12">
                             <select name="type">
-                                <option value="">Choose your option</option>
+                                <option value="">choisissez votre option</option>
                                 <option value="calorique">calorique</option>
                                 <option value="maigre">regime alimentaire maigre</option>
                                 <option value="vitamine">vitamines</option>

@@ -29,6 +29,5 @@
             @endforeach
             </tbody>
         </table>
-        <a href="recette/form" class="waves-effect waves-light btn">ajouter recette</a>
     </div>
 @endsection
