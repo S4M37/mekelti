@@ -69,9 +69,9 @@ class UserServices
             $userFavoris->id_Recette = $request->input('id_Recette');
             $userFavoris->id_User = $id_user;
             $userFavoris->save();
-            return response()->json(['response', $userFavoris], 200);
+            return response()->json(['response' => $userFavoris], 200);
         } else {
-            return response()->json(['response', "recette not found"], 404);
+            return response()->json(['response' => "recette not found"], 404);
 
         }
     }

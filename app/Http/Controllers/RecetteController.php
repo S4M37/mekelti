@@ -70,6 +70,7 @@ class RecetteController extends Controller
         $newRecette->label = $request->input('label');
         $newRecette->description = $request->input('description');
         $newRecette->type = "";
+        $newRecette->link = $http_response_header->input('link');
         $newRecette->save();
 
         return redirect('/recette');

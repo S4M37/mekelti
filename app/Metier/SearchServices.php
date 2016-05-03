@@ -14,7 +14,8 @@ class SearchServices
         $recettes = Recette::orderBy('id_Recette', 'desc')
             ->where(function ($query) use ($get) {
                 $query->where('label', 'like', '%' . $get . '%')
-                    ->orWhere('type', 'like', '%' . $get . '%');
+                    ->orWhere('type', 'like', '%' . $get . '%')
+                    ->orWhere('description', 'like', '%' . $get . '%');
             })->whereIdProposed(0)
             ->get();
         $response = array();
@@ -27,7 +28,8 @@ class SearchServices
                 ->select('recette.*')
                 ->where(function ($query) use ($get) {
                     $query->where('label', 'like', '%' . $get . '%')
-                        ->orWhere('type', 'like', '%' . $get . '%');
+                        ->orWhere('type', 'like', '%' . $get . '%')
+                        ->orWhere('description', 'like', '%' . $get . '%');
                 })->get();
             foreach ($proposedRecettesByLabel as $item) {
                 array_push($response, (object)array('favoris' => '0', 'favorisId' => '0', 'recette' => $item));
@@ -51,7 +53,8 @@ class SearchServices
                 ->select('recette.*')
                 ->where(function ($query) use ($get) {
                     $query->where('label', 'like', '%' . $get . '%')
-                        ->orWhere('type', 'like', '%' . $get . '%');
+                        ->orWhere('type', 'like', '%' . $get . '%')
+                        ->orWhere('description', 'like', '%' . $get . '%');
                 })->get();
             foreach ($proposedRecettes as $recette) {
                 if (count($userFavoris) > 0) {
