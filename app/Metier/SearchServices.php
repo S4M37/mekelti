@@ -11,11 +11,14 @@ class SearchServices
 
     public function searchByAll($get, $id_User)
     {
+        $parts = explode(' ', $get);
         $recettes = Recette::orderBy('id_Recette', 'desc')
-            ->where(function ($query) use ($get) {
+            ->where(function ($query) use ($get, $parts) {
                 $query->where('label', 'like', '%' . $get . '%')
-                    ->orWhere('type', 'like', '%' . $get . '%')
-                    ->orWhere('description', 'like', '%' . $get . '%');
+                    ->orWhere('type', 'like', '%' . $get . '%');
+                foreach ($parts as $part) {
+                    $query->orWhere('description', 'like', "%{$part}%");
+                }
             })->whereIdProposed(0)
             ->get();
         $response = array();
@@ -26,10 +29,12 @@ class SearchServices
             $proposedRecettesByLabel = ProposedRecette::whereValid(1)
                 ->join('recette', 'recette.id_Proposed', '=', 'proposed_recette.id_Proposed')
                 ->select('recette.*')
-                ->where(function ($query) use ($get) {
+                ->where(function ($query) use ($get, $parts) {
                     $query->where('label', 'like', '%' . $get . '%')
-                        ->orWhere('type', 'like', '%' . $get . '%')
-                        ->orWhere('description', 'like', '%' . $get . '%');
+                        ->orWhere('type', 'like', '%' . $get . '%');
+                    foreach ($parts as $part) {
+                        $query->orWhere('description', 'like', "%{$part}%");
+                    }
                 })->get();
             foreach ($proposedRecettesByLabel as $item) {
                 array_push($response, (object)array('favoris' => '0', 'favorisId' => '0', 'recette' => $item));
@@ -51,10 +56,12 @@ class SearchServices
                 ->whereValid(1)
                 ->join('recette', 'recette.id_Proposed', '=', 'proposed_recette.id_Proposed')
                 ->select('recette.*')
-                ->where(function ($query) use ($get) {
+                ->where(function ($query) use ($get, $parts) {
                     $query->where('label', 'like', '%' . $get . '%')
-                        ->orWhere('type', 'like', '%' . $get . '%')
-                        ->orWhere('description', 'like', '%' . $get . '%');
+                        ->orWhere('type', 'like', '%' . $get . '%');
+                    foreach ($parts as $part) {
+                        $query->orWhere('description', 'like', "%{$part}%");
+                    }
                 })->get();
             foreach ($proposedRecettes as $recette) {
                 if (count($userFavoris) > 0) {

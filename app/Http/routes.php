@@ -63,26 +63,28 @@ Route::group(['prefix' => 'search'], function () {
 });
 
 //user
-Route::group(['prefix' => 'user'], function () {
-    Route::group(['prefix' => '/{id_User}'], function () {
-        route::get('/', 'UserController@getUser');
-        route::get('/newsfeed', 'UserController@getNewsFeed');
-        route::post('/update', 'UserController@updateUser');
-        route::get('/delete', 'UserController@deleteUser');
-        Route::group(['prefix' => '/favoris'], function () {
-            route::get('/', 'UserController@getFavoris');
-            route::post('/add', 'UserController@storeFavoris');
-            Route::group(['prefix' => '/{id_Favoris}', 'before' => 'id_User'], function () {
-                route::get('/delete', 'UserController@deleteFavoris');
+Route::group(['middleware' => ['jwt.auth']], function () {
+    Route::group(['prefix' => 'user'], function () {
+        Route::group(['prefix' => '/{id_User}'], function () {
+            route::get('/', 'UserController@getUser');
+            route::get('/newsfeed', 'UserController@getNewsFeed');
+            route::post('/update', 'UserController@updateUser');
+            route::get('/delete', 'UserController@deleteUser');
+            Route::group(['prefix' => '/favoris'], function () {
+                route::get('/', 'UserController@getFavoris');
+                route::post('/add', 'UserController@storeFavoris');
+                Route::group(['prefix' => '/{id_Favoris}', 'before' => 'id_User'], function () {
+                    route::get('/delete', 'UserController@deleteFavoris');
+                });
             });
-        });
-        Route::group(['prefix' => '/proposed'], function () {
-            route::get('/', 'ProposedRecetteController@getProposed');
-            route::post('/store', 'ProposedRecetteController@proposeRecette');
-            Route::group(['prefix' => '/{id_Propose}'], function () {
+            Route::group(['prefix' => '/proposed'], function () {
                 route::get('/', 'ProposedRecetteController@getProposed');
-                route::post('/update', 'ProposedRecetteController@proposeRecette');
-                route::get('/delete', 'ProposedRecetteController@delete');
+                route::post('/store', 'ProposedRecetteController@proposeRecette');
+                Route::group(['prefix' => '/{id_Propose}'], function () {
+                    route::get('/', 'ProposedRecetteController@getProposed');
+                    route::post('/update', 'ProposedRecetteController@proposeRecette');
+                    route::get('/delete', 'ProposedRecetteController@delete');
+                });
             });
         });
     });

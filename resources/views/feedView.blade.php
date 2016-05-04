@@ -16,8 +16,8 @@
             <p>
                 <small>Posted on {{ $item->get_date('j F Y | g:i a') }}</small>
             </p>
-            <a href="addparsedrecipe?label={{$item->get_title()}}&amp;description={{$item->get_description()}}"
-               &amp;link="{{$item->get_permalink()}}">ajouter cette recette</a>
+            <a href="addparsedrecipe?label={{$item->get_title()}}&amp;description={{$item->get_description()}}
+                    &amp;link={{$item->get_permalink()}}">ajouter cette recette</a>
         </div>
     @endforeach
 @endsection

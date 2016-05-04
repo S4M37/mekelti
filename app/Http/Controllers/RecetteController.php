@@ -66,14 +66,62 @@ class RecetteController extends Controller
 
     public function storeParserRecipe(Request $request)
     {
+        $description = $request->input('description');
         $newRecette = new Recette();
         $newRecette->label = $request->input('label');
-        $newRecette->description = $request->input('description');
+        $newRecette->description = $this->getDescription($description);
         $newRecette->type = "";
-        $newRecette->link = $http_response_header->input('link');
+        $newRecette->img = $this->getSrc($description);
+        $newRecette->link = $request->input('link');
         $newRecette->save();
 
         return redirect('/recette');
+    }
+
+    public function getDescription($str = "")
+    {
+
+        $text = $str;
+        if ((preg_match('/</', $text)) == 0)
+            return $text;
+        $document = new \DOMDocument();
+        $document->loadHTML($text);
+        if (preg_match("/^<img/", $text)) {
+
+
+            return $data = substr($text, strpos($text, ">") + 1, strlen($text) - (strpos($text, ">") + 1));
+        } else {
+            $texts = array();
+            $datas = preg_split(preg_quote("/</"), $text);
+            array_push($texts, $datas[0]);
+            for ($i = 1; $i < count($datas); $i++) {
+                $tmp = substr($datas[$i], strpos($datas[$i], ">") + 1, strlen($datas[$i]) - (strpos($datas[$i], ">") + 1));
+                array_push($texts, $tmp);
+            }
+            $str = "";
+            foreach ($texts as $txt) {
+                $str .= $txt;
+            }
+            return $str;
+        }
+
+
+    }
+
+    public function getSrc($str = "")
+    {
+        $urls = array();
+        $dom = new \DOMDocument();
+        $dom->loadHTML($str);
+        $images = $dom->getElementsByTagName('img');
+        foreach ($images as $image) {
+            $url = $image->getAttribute('src');
+            array_push($urls, $url);
+
+        }
+        return $urls[0];
+        //3-6-10-11 only images
+
     }
 
     public function getUpdate($id_Recette = null)

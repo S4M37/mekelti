@@ -34,7 +34,7 @@ class MobileService
     function validate($id_user, $validation_code)
     {
         $user = User::find($id_user);
-        if ($user == null) {
+            if ($user == null) {
             $response = json_encode(array("response" => 0), JSON_FORCE_OBJECT);
         } else {
             if ($validation_code == $user->validation_code) {

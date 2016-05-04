@@ -28,7 +28,7 @@ class ProposedRecetteController extends Controller
         return $this->proposedRecetteServices->store($id_User, $request);
     }
 
-    public function delete($id_Proposed)
+    public function delete($id_User, $id_Proposed)
     {
         return $this->proposedRecetteServices->delete($id_Proposed);
     }
